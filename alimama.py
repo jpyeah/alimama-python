@@ -9,8 +9,8 @@ from selenium import webdriver
 class Spider(object):
     def __init__(self):
         self.web = webdriver.Chrome()
-        self.__username = '淘宝账号'
-        self.__password = '淘宝密码'
+        self.__username = '钟继飘'
+        self.__password = 'jpjy8601833041'
         self.headers = {
             'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
             'accept-encoding': 'gzip, deflate, br',
@@ -42,6 +42,13 @@ class Spider(object):
         self.cookies = cookie
         self.headers['Cookie'] = self.cookies
         self.web.quit()
+    #转换链接获取口令
+    def get_goods_list(self):
+        res = self.req.get(
+            'http://pub.alimama.com/urltrans/urltrans.json?pvid=&_input_charset=utf-8&promotionURL=https://item.taobao.com/item.htm?id=559103665936&siteid=39800881&adzoneid=150032591&t=&_tb_token_=' + self.token,
+            headers=self.headers
+        )
+        print(res.text)
 
     # 获取淘宝客订单列表
     def get_taoke_order_list(self):
@@ -75,8 +82,9 @@ class Spider(object):
 if __name__ == '__main__':
     sp = Spider()
     sp.login()
-    sp.add_ad()
-    sp.get_ad_list()
-    for i in range(1000):
-        sp.get_taoke_order_list()
-        time.sleep(30)
+    sp.get_goods_list()
+    # sp.add_ad()
+    # sp.get_ad_list()
+    # for i in range(1000):
+    #     sp.get_taoke_order_list()
+    #     time.sleep(30)
